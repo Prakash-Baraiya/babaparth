@@ -10,8 +10,14 @@ response = requests.post(
     }
 )
 
-if response.status_code != 200:
-    print("Request Failed! reasons:\n\t1).Token Expired\n\t2). API Not Working")
+if response.status_code == 200:
+    try:
+        data = response.json()
+    except ValueError as e:
+        print("Failed to parse JSON data from the API response.")
+        exit()
+else:
+    print("Request Failed! reasons:\n\t1). Token Expired\n\t2). API Not Working")
     exit()
 
 data = response.json()
